@@ -1,8 +1,11 @@
 // KanbanColumn.js
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import KanbanCard from './kanbanCard';
+import { context } from './Context';
 
-const KanbanColumn = ({ title, cards ,groupby,data}) => {
+const KanbanColumn = ({ title, cards, groupby, data }) => {
+  const { theme } = useContext(context)
+
   return (
     <div className="mt-4">
       <h2 className="text-lg font-semibold mb-4 flex justify-between px-2">

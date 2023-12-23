@@ -1,17 +1,19 @@
 import GoogleUserLogo from './Logo';
 import './App.css';
 import KanbanBoard from './kanbanBoard';
-import react, { useState, useEffect } from "react"
+import react, { useState, useEffect, useContext } from "react"
 import axios from 'axios';
+import { MyProvider, context } from './Context';
 
 
 function App() {
-  const [theme,settheme] = useState(true)
   const [kanbanData, setKanbanData] = useState([]);
-
+  const {theme} = useContext(context)
   useEffect(() => {
     fetchData();
   }, []);
+
+   
 
   useEffect(() => {
     if (kanbanData) {
@@ -55,9 +57,11 @@ function App() {
     // </div>
       
 
-    <div className="bg-gray-300 min-h-screen">
+      
+    <div className={` min-h-screen ${theme ? " text-black" : "text-white"}`}>
       <KanbanBoard data={kanbanData} />
     </div>
+
   );
 }
 

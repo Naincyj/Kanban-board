@@ -1,9 +1,12 @@
 // KanbanCard.js
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { context } from './Context';
 
 const KanbanCard = ({ card }) => {
+   const { theme } = useContext(context)
+
    return (
-      <div className="rounded-md w-full p-4 bg-[#ffff] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] border-[#e6e7eb] flex flex-col gap-3">
+      <div className={`${theme ? "bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]" : "bg-gray-700 shadow-[rgba(_255,_255,_255,_0.04)_0px_3px_8px]"} rounded-md w-full p-4  border-[#e6e7eb]  flex flex-col gap-3`}>
          <div className='flex justify-between'>
             <div className='text-base text-[#8D8D8D] font-sans'>{card.id}</div>
             {/* <div className='bg-red-600 p-2 rounded-full' >{card.name[0]}{card.name.split(" ")[1][0]}</div> */}
@@ -20,10 +23,10 @@ const KanbanCard = ({ card }) => {
             {card.status === "Cancelled" &&
                <svg className='text-white' stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12Zm8.036-4.024a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042L10.939 12l-2.963 2.963a.749.749 0 0 0 .326 1.275.749.749 0 0 0 .734-.215L12 13.06l2.963 2.964a.75.75 0 0 0 1.061-1.06L13.061 12l2.963-2.964a.749.749 0 0 0-.326-1.275.749.749 0 0 0-.734.215L12 10.939Z"></path></svg>}
             {card.status === "Done" && <svg className='text-blue-500' stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" ><path d="M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11-4.925 11-11 11S1 18.075 1 12Zm16.28-2.72a.751.751 0 0 0-.018-1.042.751.751 0 0 0-1.042-.018l-5.97 5.97-2.47-2.47a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042l3 3a.75.75 0 0 0 1.06 0Z"></path></svg>}
-            <div className='text-base font-medium text-[#373737] font-sans leading-[102%]'>{card.title}</div>
+            <div className={`text-base font-medium text-[#373737] font-sans leading-[102%]  ${theme ? " text-black" : "text-white"}`}>{card.title}</div>
          </div>
          <div className='flex gap-2'>
-            <div className='border-[1px] flex w-fit border-gray-300 p-1 rounded-4 text-gray-600'>
+            <div className={`border-[1px] flex w-fit border-gray-600 p-1 rounded-[8px] ${theme ? " text-black" : "text-white"}`}>
                {card.priority === 4 &&
                   <svg className='text-orange-500' stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" ><path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path></svg>
                }{card.priority === 1 &&
