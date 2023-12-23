@@ -105,7 +105,7 @@ const KanbanBoard = ({ data }) => {
         console.log("sortedf")
         const sortedGroup = groupedData[group].sort((a, b) => {
           if (sort === 'priority') {
-            return a.priority - b.priority;
+            return b.priority - a.priority;
           } else if (sort === 'title') {
             return a.title.localeCompare(b.title);
           }
