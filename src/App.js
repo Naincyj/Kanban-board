@@ -1,31 +1,32 @@
 import GoogleUserLogo from './Logo';
 import './App.css';
 import KanbanBoard from './kanbanBoard';
-import react,{useState,useEffect} from "react"
-const axios = require('axios');
+import react, { useState, useEffect } from "react"
+import axios from 'axios';
 
 
 function App() {
-
+  const [theme,settheme] = useState(true)
   const [kanbanData, setKanbanData] = useState([]);
 
   useEffect(() => {
-    // Fetch data when the component mounts
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (kanbanData) {
+      localStorage.setItem("data",kanbanData)
+    }
+  },[kanbanData])
 
-    const fetchData = async () => {
+  const fetchData = async () => {
     try {
-      // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
-      const response = await fetch('https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers');
-      if(response){const data = await  response.json();
-        
-      // If using Axios:
-      // const response = await axios.get('YOUR_API_ENDPOINT');
-      // const data = response.data;
-         console.log(data);
-      setKanbanData(data);}
+      const response = await axios.get('https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers');
+
+      if (response) {
+        const data = response.data;
+        setKanbanData(data);
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -49,14 +50,14 @@ function App() {
     //           <div></div>
     //   </div>
 
-      
-      
+
+
     // </div>
+      
 
-
-    <div className="bg-gray-100 min-h-screen">
-    {/* <KanbanBoard data={kanbanData.tickets} /> */}
-  </div>
+    <div className="bg-gray-300 min-h-screen">
+      <KanbanBoard data={kanbanData} />
+    </div>
   );
 }
 
