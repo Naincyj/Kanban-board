@@ -2,17 +2,53 @@
 import React, { useState } from 'react';
 import KanbanColumn from './kanbanColumn';
 
-const KanbanBoard = ({ data }) => {
+const KanbanBoard = (data) => {
   const [groupBy, setGroupBy] = useState('status');
   const [sortBy, setSortBy] = useState('priority');
 
-  const groupByOptions = ['status', 'priority', 'user'];
+  const groupByOptions = ['status', 'priority', 'userId'];
   const sortByOptions = ['priority', 'title'];
 
   const groupData = (group) => {
     const groupedData = {};
+       const arr=[];
+      if(group==='status')
+      {
+        arr.push('Backlog');
+        arr.push('Todo');
+        arr.push('In progress');
+        arr.push('Done');
+        arr.push('Cancelled');
+        
+      }
+      
+    else if(group==='priority')
+    {
+      arr.push('No Priority');
+        arr.push('Low');
+        arr.push('Medium');
+        arr.push('High');
+        arr.push('Urgent');
+        
+    }
+    
+  else
+  { arr.push('usr-1');
+  arr.push('usr-2');
+  arr.push('usr-3');
+  arr.push('usr-4');
+  arr.push('usr-5');
+  
 
-    data.forEach((card) => {
+  }
+     arr.forEach((groupName)=>{
+       
+       groupedData[groupName]=[];
+     });
+
+     {console.log(data,"tickets")}
+    data?.forEach((card) => {
+      console.log(card,"card")
       const key = card[group];
       if (!groupedData[key]) {
         groupedData[key] = [];
@@ -24,9 +60,9 @@ const KanbanBoard = ({ data }) => {
   };
 
   const sortData = (sort) => {
-    return data.sort((a, b) => {
+    return data?.sort((a, b) => {
       if (sort === 'priority') {
-        return a.priority.localeCompare(b.priority);
+        return a.priority - b.priority;
       } else if (sort === 'title') {
         return a.title.localeCompare(b.title);
       }

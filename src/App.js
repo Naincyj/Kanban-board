@@ -1,24 +1,38 @@
 import GoogleUserLogo from './Logo';
 import './App.css';
 import KanbanBoard from './kanbanBoard';
+import react,{useState,useEffect} from "react"
+const axios = require('axios');
 
 
 function App() {
 
-  const kanbanData = [
-    { id: 1, description: 'CAM-1', title: 'Update User Profile Page UI', status: 'To Do', priority: 'Urgent', user: 'User 1' },
-    { id: 2, description: 'CAM-2', title: 'Add Multi-Language Support - Enable multi-language support within the application.', status: 'In Progress', priority: 'High', user: 'User 2' },
-    { id: 3, description: 'CAM-3', title: 'Optimize Database Queries for Performance', status: 'In Progress', priority: 'Low', user: 'User 2' },
-    // Add more cards as needed
-    {id: 4, description: 'CAM-4', title: 'Implement Email Notification System', status: 'In Progress', priority: 'High', user: 'User 1' },
-    { id: 5, description: 'CAM-5', title: 'Enhance Search Functionality', status: 'In Progress', priority: 'No Priority', user: 'User 5' },
-    { id: 6, description: 'CAM-6', title: 'Third-Party Payment Gateway', status: 'To Do', priority: 'Low', user: 'User 2' },
-    {id: 7, description: 'CAM-7', title: 'Create Onboarding Tutorial for New Users', status: 'Backlog', priority: 'Medium', user: 'User 1' },
-    { id: 8, description: 'CAM-8', title: 'Implement Role-Based Access Control (RBAC)', status: 'In Progress', priority: 'High', user: 'User 3' },
-    { id: 9, description: 'CAM-9', title: 'Upgrade Server Infrastructure', status: 'To Do', priority: 'Medium', user: 'User 5' },
-    { id: 10, description: 'CAM-10', title: 'Conduct Security Vulnerability Assessment', status: 'Backlog', priority: 'Low', user: 'User 4' },
-   
-  ];
+  const [kanbanData, setKanbanData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data when the component mounts
+    fetchData();
+  }, []);
+
+
+    const fetchData = async () => {
+    try {
+      // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
+      const response = await fetch('https://tfyincvdrafxe7ut2ziwuhe5cm0xvsdu.lambda-url.ap-south-1.on.aws/ticketAndUsers');
+      if(response){const data = await  response.json();
+        
+      // If using Axios:
+      // const response = await axios.get('YOUR_API_ENDPOINT');
+      // const data = response.data;
+         console.log(data);
+      setKanbanData(data);}
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
+
 
   return (
     // <div className="">
@@ -41,7 +55,7 @@ function App() {
 
 
     <div className="bg-gray-100 min-h-screen">
-    <KanbanBoard data={kanbanData} />
+    {/* <KanbanBoard data={kanbanData.tickets} /> */}
   </div>
   );
 }
